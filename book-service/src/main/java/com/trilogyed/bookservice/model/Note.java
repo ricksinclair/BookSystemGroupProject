@@ -6,26 +6,42 @@ import java.util.Objects;
 public class Note {
 
 
-
     private int noteId;
     private int bookId;
-    @Size(min=1, max=255, message="Note cannot be empty. Note cannot exceed 255 characters.")
+    @Size(min = 1, max = 255, message = "Note cannot be empty. Note cannot exceed 255 characters.")
     private String note;
+
+
+    public Note(){
+
+    }
+
+    public Note(int noteId, int bookId, String note){
+        this.noteId = noteId;
+        this.bookId = bookId;
+        this.note = note;
+    }
+
     public int getNoteId() {
         return noteId;
     }
+
     public void setNoteId(int noteId) {
         this.noteId = noteId;
     }
+
     public int getBookId() {
         return bookId;
     }
+
     public void setBookId(int bookId) {
         this.bookId = bookId;
     }
+
     public String getNote() {
         return note;
     }
+
     public void setNote(String note) {
         this.note = note;
     }

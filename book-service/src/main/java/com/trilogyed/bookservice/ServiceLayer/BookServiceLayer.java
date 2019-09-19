@@ -17,9 +17,6 @@ public class BookServiceLayer {
 
     BookDao bookDao;
     NoteService noteService;
-    List<Note> notes;
-    List<Note> noteIdList;
-    List<Note> notesList;
 
     @Autowired
     public BookServiceLayer(BookDao bookDao, NoteService noteService) {
@@ -37,44 +34,24 @@ public class BookServiceLayer {
             bvm.setBookId(book.getBookId());
             bvm.setTitle(book.getTitle());
             bvm.setAuthor(book.getAuthor());
-            bvm.setNoteId();
-
+            bvm.setNotes(noteService.getNoteByBook(book.getBookId()));
 
             return bvm;
         }
         return null;
     }
 
-
-
-
     private BookViewModel buildBookViewModel(Book book){
-
-        notes=noteService.getNoteByBook();
-        Note note= new Note();
-
-        for(Note n: notes) {
-           noteIdList.add(n.getNoteId());
-        }
 
         BookViewModel bookViewModel= new BookViewModel();
         bookViewModel.setBookId(book.getBookId());
         bookViewModel.setTitle(book.getTitle());
         bookViewModel.setAuthor(book.getAuthor());
-        bookViewModel.setNoteId(note.getNoteId());
-        bookViewModel.setNote();
-
+        bookViewModel.setNotes(noteService.getNoteByBook(book.getBookId()));
         return bookViewModel;
     }
 
     private NoteViewModel buildNoteViewModel(Note note){
-
-        notes=noteService.getNoteByBook();
-
-        for(Note n: notes) {
-            note.setNoteId(n.getNoteId());
-            note.setNote(n.getNote());
-        }
 
         NoteViewModel noteViewModel= new NoteViewModel();
         noteViewModel.setNoteId((note.getNoteId()));

@@ -10,8 +10,7 @@ public class BookViewModel {
     private int bookId;
     private String title;
     private String author;
-    private int noteId;
-    private List<Note> note;
+    private List<Note> notes;
 
     public int getBookId() {
         return bookId;
@@ -37,20 +36,12 @@ public class BookViewModel {
         this.author = author;
     }
 
-    public int getNoteId() {
-        return noteId;
+    public List<Note> getNotes() {
+        return notes;
     }
 
-    public void setNoteId(int noteId) {
-        this.noteId = noteId;
-    }
-
-    public List<Note> getNote() {
-        return note;
-    }
-
-    public void setNote(List<Note> note) {
-        this.note = note;
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
     @Override
@@ -58,15 +49,14 @@ public class BookViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookViewModel that = (BookViewModel) o;
-        return bookId == that.bookId &&
-                noteId == that.noteId &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(author, that.author) &&
-                Objects.equals(note, that.note);
+        return getBookId() == that.getBookId() &&
+                getTitle().equals(that.getTitle()) &&
+                getAuthor().equals(that.getAuthor()) &&
+                getNotes().equals(that.getNotes());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookId, title, author, noteId, note);
+        return Objects.hash(getBookId(), getTitle(), getAuthor(), getNotes());
     }
 }
