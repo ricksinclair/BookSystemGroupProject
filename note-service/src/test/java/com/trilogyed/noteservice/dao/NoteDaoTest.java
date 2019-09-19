@@ -64,10 +64,38 @@ public class NoteDaoTest {
 
     @Test
     public void getNotesByBook() {
+        Note note = new Note();
+        note.setBookId(1);
+        note.setNote("Note number 1");
+
+        noteDao.addNote(note);
+
+        note = new Note();
+        note.setBookId(1);
+        note.setNote("Note number 2");
+
+        noteDao.addNote(note);
+
+        List<Note> noteList = noteDao.getNotesByBook(1);
+        assertEquals(noteList.size(), 2);
+
+        noteList = noteDao.getNotesByBook(2);
+        assertEquals(noteList.size(), 0);
     }
 
     @Test
     public void updateNote() {
+        Note updatedNote = new Note();
+        updatedNote.setBookId(1);
+        updatedNote.setNote("Note number 1");
+
+        noteDao.addNote(updatedNote);
+
+        updatedNote.setNote("Note number 1 updated");
+        noteDao.updateNote(updatedNote);
+
+        Note noteUpdated = noteDao.getNoteById(updatedNote.getNoteId());
+        assertEquals(updatedNote, noteUpdated);
     }
 
 }
