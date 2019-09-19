@@ -37,8 +37,8 @@ public class NoteServiceController {
         }
     }
 
-    @RequestMapping(value="/notes/book/{book_id}", method = RequestMethod.GET)
-    public List<Note> getNotesByBook(@PathVariable(name="book_id") int bookId) {
+    @RequestMapping(value="/notes/book/{bookId}", method = RequestMethod.GET)
+    public List<Note> getNotesByBook(@PathVariable(name="bookId") int bookId) {
         return noteDao.getNotesByBook(bookId);
     }
 
