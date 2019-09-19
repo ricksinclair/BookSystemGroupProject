@@ -1,4 +1,4 @@
-package com.trilogyed.bookservice.ServiceLayer;
+package com.trilogyed.bookservice.serviceLayer;
 
 import com.trilogyed.bookservice.dao.BookDao;
 import com.trilogyed.bookservice.model.Book;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -21,29 +22,61 @@ public class BookServiceLayer {
     @Autowired
     public BookServiceLayer(BookDao bookDao, NoteService noteService) {
         this.bookDao = bookDao;
-        this.noteService=noteService;
+        this.noteService = noteService;
+    }
+
+    public BookViewModel getBook(int id) {
+        Book book = bookDao.getBook(id);
+        if (book == null) {
+            return null;
+        } else {
+            return buildBookViewModel(book);
+        }
+    }
+
+    public List<BookViewModel> getAllBooks() {
+        List<Book> bookList = bookDao.getAllBooks();
+        List<BookViewModel> bvmList = new ArrayList<>();
+
+        for (Book b : bookList) {
+            bvmList.add(buildBookViewModel(b));
+        }
+        return bvmList;
     }
 
     @Transactional
-    public BookViewModel getBook(int id){
+    public BookViewModel addBook(BookViewModel bookViewModel) {
+        Book book = new Book();
+        book.setBookId(bookViewModel.getBookId());
+        book.setTitle(bookViewModel.getTitle());
+        book.setAuthor(bookViewModel.getAuthor());
 
-        Book book=bookDao.getBook(id);
-        if (book!=null){
-            BookViewModel bvm= new BookViewModel();
+        book = bookDao.addBook(book);
 
-            bvm.setBookId(book.getBookId());
-            bvm.setTitle(book.getTitle());
-            bvm.setAuthor(book.getAuthor());
-            bvm.setNotes(noteService.getNoteByBook(book.getBookId()));
+        bookViewModel.setBookId(book.getBookId());
+        bookViewModel.setTitle(book.getTitle());
+        bookViewModel.setAuthor(book.getAuthor());
+        bookViewModel.setNotes(noteService.getNoteByBook(bookViewModel.getBookId()));
 
-            return bvm;
-        }
-        return null;
+        return bookViewModel;
     }
 
-    private BookViewModel buildBookViewModel(Book book){
+    public void updateBook(BookViewModel bookViewModel) {
+        Book book = new Book();
+        book.setBookId(bookViewModel.getBookId());
+        book.setTitle(bookViewModel.getTitle());
+        book.setAuthor(bookViewModel.getAuthor());
 
-        BookViewModel bookViewModel= new BookViewModel();
+        bookDao.updateBook(book);
+    }
+
+    public void deleteBook(int id) {
+        bookDao.deleteBook(id);
+    }
+
+    private BookViewModel buildBookViewModel(Book book) {
+
+        BookViewModel bookViewModel = new BookViewModel();
         bookViewModel.setBookId(book.getBookId());
         bookViewModel.setTitle(book.getTitle());
         bookViewModel.setAuthor(book.getAuthor());
@@ -51,9 +84,9 @@ public class BookServiceLayer {
         return bookViewModel;
     }
 
-    private NoteViewModel buildNoteViewModel(Note note){
+    private NoteViewModel buildNoteViewModel(Note note) {
 
-        NoteViewModel noteViewModel= new NoteViewModel();
+        NoteViewModel noteViewModel = new NoteViewModel();
         noteViewModel.setNoteId((note.getNoteId()));
         noteViewModel.setNote(note.getNote());
         noteViewModel.setBookId(note.getBookId());

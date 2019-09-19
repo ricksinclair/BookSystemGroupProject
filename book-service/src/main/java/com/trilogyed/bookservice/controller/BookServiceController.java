@@ -1,8 +1,6 @@
-package com.trilogyed.bookservice.Controller;
+package com.trilogyed.bookservice.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
