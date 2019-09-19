@@ -57,6 +57,7 @@ public class BookDaoJdbcTemplateImplementation implements BookDao {
 
     @Override
     public List<Book> getAllBooks() {
+
         return jdbcTemplate.query(SELECT_ALL_BOOKS, this::mapRowToBook);
     }
 
