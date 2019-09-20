@@ -1,0 +1,250 @@
+openapi: 3.0.0
+info:
+  title: Book System Project
+  description: A system which allows users to store books and their associated notes. 
+  version: 0.0.1
+servers: 
+  - url: http://localhost:4242
+    description: book service server
+  - url: http://localhost:1984
+    description: note service server
+paths:
+  /notes:
+    post:
+      summary: add note
+      description: Add a new note object by including all fields except noteId.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        '201':
+          description: Returns added note object with noteeId included.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '400':
+            description: Invalid request syntax
+          
+        '422':
+            description: Incomplete note object information
+    
+  /notes/book/{bookId}:
+    get:
+      summary: get notes by bookId
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: integer
+      description: retrieve a list of all notes for the specified book, specified by bookId
+      responses:
+        '200':
+          description: list of notes by book id
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                     $ref: '#/components/schemas/Note'                    
+
+          
+  /notes/{noteId}:
+    put:
+      summary: update note
+      parameters:
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: integer
+      description: update note by including a note object with an id that matches that of path parameter.
+      requestBody:
+          required: true 
+          content:
+              application/json:
+                schema:
+                     $ref: '#/components/schemas/Note'                    
+      responses:
+        '201':
+          description: game successfully updated
+    get:
+      summary: Get note by noteId
+      parameters:
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: integer
+      description: get note by specifying noteId in the path variable.
+                   
+      responses:
+        '201':
+          description: game successfully updated
+              
+    delete:
+      summary: update note
+      parameters:
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: integer
+      description: delete note by including a note object with an id that matches that of path parameter.
+                  
+      responses:
+        '202':
+          description: note successfully deleted
+              
+                  
+  /books:
+    get:
+      summary: Get a list of all books
+      responses:
+        '200':
+          description: the list of all books
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                     $ref: '#/components/schemas/BookViewModel'
+                     
+    post:
+      summary: add Book
+      description: Add a new book object by including all fields except bookId.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          description: Returns added book with bookId included.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookViewModel'
+        '400':
+            description: Invalid request syntax
+          
+        '422':
+            description: Incomplete book object information
+                     
+                     
+  /books/{bookId}:
+    get:
+      summary: Get an individual book by bookId
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: bookId of the book you wish to view.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: the individual book you requested.
+          content:
+              application/json:
+                schema:
+                     $ref: '#/components/schemas/BookViewModel'   
+                     
+    put:
+      summary: Update a book
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: bookId of the book you wish to update.
+          schema:
+            type: integer
+      description: update book that matches bookId specified in path.
+      requestBody:
+          required: true 
+          content:
+              application/json:
+                schema:
+                     $ref: '#/components/schemas/Book'   
+      responses:
+        '200':
+          description: the individual book you requested.
+          content:
+              application/json:
+                schema:
+                     $ref: '#/components/schemas/BookViewModel'    
+                   
+    delete:
+      summary: Deletes the entry for the book with the  given bookId
+      parameters: 
+        - name: bookId
+          in: path
+          required: true
+          description: bookId of the book you'd like to delete
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Book sucessfully deleted
+        '400':
+          description: Invalid request syntax
+
+    
+
+components:
+  schemas:
+    Note:
+      properties:
+        noteId:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+
+
+      required: 
+        - title
+        - author
+
+
+    Book:
+      properties:
+        bookId: 
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+      
+      required: 
+        - title
+        - author
+       
+    BookViewModel:
+      properties:
+        bookId: 
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+      
+          
+      required: 
+        - title
+        - esrbRating
+        - description
+        - price
+        - studio
+        - quantity
+        
