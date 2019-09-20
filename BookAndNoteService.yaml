@@ -240,11 +240,5 @@ components:
             $ref: '#/components/schemas/Note'
       
           
-      required: 
-        - title
-        - esrbRating
-        - description
-        - price
-        - studio
-        - quantity
+
         
