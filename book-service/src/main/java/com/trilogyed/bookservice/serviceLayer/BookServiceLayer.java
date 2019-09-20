@@ -56,6 +56,7 @@ public class BookServiceLayer {
         bookViewModel.setBookId(book.getBookId());
         bookViewModel.setTitle(book.getTitle());
         bookViewModel.setAuthor(book.getAuthor());
+
         bookViewModel.setNotes(noteService.getNoteByBook(bookViewModel.getBookId()));
 
         return bookViewModel;

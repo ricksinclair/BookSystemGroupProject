@@ -30,6 +30,9 @@ public class NoteQueueConsumerApplication {
 
 	@Bean
 	public Jackson2JsonMessageConverter jackson2JsonMessageConverter(){return new Jackson2JsonMessageConverter();}
+
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(NoteQueueConsumerApplication.class, args);
 	}
