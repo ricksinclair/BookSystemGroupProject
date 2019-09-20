@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Note {
 
-
     private int noteId;
     private int bookId;
     @Size(min = 1, max = 255, message = "Note cannot be empty. Note cannot exceed 255 characters.")
