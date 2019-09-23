@@ -12,6 +12,7 @@ public class NoteViewModel {
     private int bookId;
     @Size(min=1, max=255, message="Note cannot be empty. Note cannot exceed 255 characters.")
     private String note;
+
     public int getNoteId() {
         return noteId;
     }

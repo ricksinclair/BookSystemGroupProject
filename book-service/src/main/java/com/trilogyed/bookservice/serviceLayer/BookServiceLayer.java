@@ -75,6 +75,7 @@ public class BookServiceLayer {
         bookDao.deleteBook(id);
     }
 
+
     private BookViewModel buildBookViewModel(Book book) {
 
         BookViewModel bookViewModel = new BookViewModel();
