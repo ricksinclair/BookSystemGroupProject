@@ -5,6 +5,7 @@ import com.trilogyed.bookservice.model.Note;
 import com.trilogyed.bookservice.serviceLayer.BookServiceLayer;
 import com.trilogyed.bookservice.util.feign.NoteService;
 import com.trilogyed.bookservice.viewModel.BookViewModel;
+import com.trilogyed.bookservice.viewModel.NoteViewModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -44,7 +45,9 @@ public class BookServiceController {
         if (exists != null)
             throw new IllegalArgumentException("Book " + book.getBookId() + " already exists.");
 
-//        List<Note> notesList = bookServiceLayer.getBook(book.getBookId()).getNotes();
+        //cant figure this part out
+//        NoteViewModel note = new NoteViewModel(book.getBookId(), book.getNotes());
+//                bookServiceLayer.getBook(book.getBookId()).getNotes();
 //        for(Note n: notesList) {
 //            String note = n.getNote();
 //        }
