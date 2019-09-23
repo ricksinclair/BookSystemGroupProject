@@ -60,4 +60,13 @@ public class Note {
     public int hashCode() {
         return Objects.hash(noteId, bookId, note);
     }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "noteId=" + noteId +
+                ", bookId=" + bookId +
+                ", note='" + note + '\'' +
+                '}';
+    }
 }

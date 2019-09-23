@@ -1,6 +1,7 @@
 package com.trilogyed.bookservice.controller;
 
 import com.trilogyed.bookservice.exception.NotFoundException;
+import com.trilogyed.bookservice.model.Note;
 import com.trilogyed.bookservice.serviceLayer.BookServiceLayer;
 import com.trilogyed.bookservice.util.feign.NoteService;
 import com.trilogyed.bookservice.viewModel.BookViewModel;
@@ -14,6 +15,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,6 +43,14 @@ public class BookServiceController {
         BookViewModel exists = bookServiceLayer.getBook(book.getBookId());
         if (exists != null)
             throw new IllegalArgumentException("Book " + book.getBookId() + " already exists.");
+
+//        List<Note> notesList = bookServiceLayer.getBook(book.getBookId()).getNotes();
+//        for(Note n: notesList) {
+//            String note = n.getNote();
+//        }
+//        rabbitTemplate.convertAndSend(TOPIC_EXCHANGE_NAME, ROUTING_KEY, note);
+//        System.out.println("Adding notes to queue...");
+
         bookServiceLayer.addBook(book);
         return book;
     }
@@ -78,7 +88,6 @@ public class BookServiceController {
     public void deleteBook(@PathVariable(name = "id") int id) {
         bookServiceLayer.deleteBook(id);
     }
-
 
 
 //    @RequestMapping(value = "/account", method = RequestMethod.POST)
