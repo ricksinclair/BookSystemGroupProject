@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-//@CacheConfig(cacheNames ={"books"})
+@CacheConfig(cacheNames ={"books"})
 public class BookServiceController {
     public static final String TOPIC_EXCHANGE_NAME = "note-exchange";
     public static final String ROUTING_KEY = "note.add.#";
@@ -37,7 +37,7 @@ public class BookServiceController {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    //    @CachePut(key="#result.getId()")
+    @CachePut(key="#result.getId()")
     @RequestMapping(value = "/books", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public BookViewModel addBook(@RequestBody BookViewModel book) {
@@ -58,7 +58,7 @@ public class BookServiceController {
         return book;
     }
 
-    //    @Cacheable
+    @Cacheable
     @RequestMapping(value = "/books/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public BookViewModel getBook(@PathVariable(name = "id") int id) {
@@ -75,7 +75,7 @@ public class BookServiceController {
         return bookServiceLayer.getAllBooks();
     }
 
-    //    @CacheEvict(key="#result.getId()")
+    @CacheEvict(key="#book.getId()")
     @RequestMapping(value = "/books/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
     public void updateBook(@RequestBody BookViewModel book) {
@@ -85,7 +85,7 @@ public class BookServiceController {
         bookServiceLayer.updateBook(book);
     }
 
-    //    @CacheEvict
+    @CacheEvict
     @RequestMapping(value = "/books/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable(name = "id") int id) {
